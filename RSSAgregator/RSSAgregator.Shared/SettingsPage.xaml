@@ -8,9 +8,24 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
-            <TextBlock Text="Settings" Style="{StaticResource Title}"></TextBlock>
-                
-        </StackPanel>
+        <ScrollViewer>
+            <StackPanel Margin="10">
+                <TextBlock Text="Settings" Style="{StaticResource Title}"></TextBlock>
+                <TextBlock Name="TextBlockOutputMessage"></TextBlock>
+                <TextBox PlaceholderText="URL" Name="TextBoxUrl"></TextBox>
+                <TextBox PlaceholderText="Name" Name="TextBoxName"></TextBox>
+                <Button Content="Save" HorizontalAlignment="Right" Name="ButtonSave" Click="ButtonSave_Click"></Button>
+                <ListView Name="ListViewBookmarks">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                <TextBlock Text="{Binding Url}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
