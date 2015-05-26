@@ -35,9 +35,9 @@ namespace RSSAgregator.ViewModel
             }
         }
 
-        public void List()
+        public async Task List()
         {
-            FetchLocalData();
+            await FetchLocalData();
         }
 
         #region LOCAL_DATA_STORAGE
@@ -49,7 +49,7 @@ namespace RSSAgregator.ViewModel
             await Windows.Storage.FileIO.WriteTextAsync(file, SerializeListToXML(this.BookmarksList));
         }
 
-        private async void FetchLocalData()
+        private async Task FetchLocalData()
         {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             if (await DoesFileExists(LOCAL_DATA_FILENAME))
@@ -57,6 +57,7 @@ namespace RSSAgregator.ViewModel
                 StorageFile file = await folder.GetFileAsync(LOCAL_DATA_FILENAME);
                 string listXml = await Windows.Storage.FileIO.ReadTextAsync(file);
                 this.BookmarksList = DeserializeXmlToList(listXml);
+                System.Diagnostics.Debug.WriteLine("Restored {0} objects", this.BookmarksList.Count);
             }
             else
             {

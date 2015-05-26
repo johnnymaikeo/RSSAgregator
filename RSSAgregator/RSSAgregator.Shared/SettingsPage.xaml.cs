@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,7 +30,26 @@ namespace RSSAgregator
         {
             this.InitializeComponent();
             this.vm = new BookmarksViewModel();
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
             UpdateListView();
+        }
+
+        void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+
+            Frame frame = Window.Current.Content as Frame;
+            if (frame == null)
+                return;
+
+            if (frame.CanGoBack)
+            {
+                frame.GoBack();
+                e.Handled = true;
+            }
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
@@ -53,9 +73,10 @@ namespace RSSAgregator
 
         }
 
-        private void UpdateListView()
+        private async void UpdateListView()
         {
-            this.vm.List();
+            await this.vm.List();
+            ListViewBookmarks.ItemsSource = null;
             ListViewBookmarks.ItemsSource = this.vm.BookmarksList;
         }
     }
