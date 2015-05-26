@@ -9,6 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid x:Name="GridMain">
+        <TextBlock FontSize="18" Text="loading..." x:Name="TextBlockMessage" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar>

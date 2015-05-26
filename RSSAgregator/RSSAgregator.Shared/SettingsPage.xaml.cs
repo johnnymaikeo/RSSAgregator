@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,6 +13,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
+#if WINDOWS_PHONE
+using Windows.Phone.UI.Input;
+#endif
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,7 +33,10 @@ namespace RSSAgregator
         {
             this.InitializeComponent();
             this.vm = new BookmarksViewModel();
+
+            #if WINDOWS_PHONE
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+            #endif
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -38,6 +44,7 @@ namespace RSSAgregator
             UpdateListView();
         }
 
+        #if WINDOWS_PHONE
         void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {
 
@@ -51,6 +58,7 @@ namespace RSSAgregator
                 e.Handled = true;
             }
         }
+        #endif
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {

@@ -33,7 +33,7 @@ namespace RSSAgregator
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
             mainVM = new MainViewModel();
-
+            TextBlockMessage.Text = "loading...";
         }
 
         private async void LoadContent()
@@ -46,6 +46,12 @@ namespace RSSAgregator
         {
             Pivot pivot = new Pivot();
             pivot.Title = "WP RSS";
+
+            if (mainVM.BookmarksList.Count == 0)
+            {
+                TextBlockMessage.Text = "Go to settings to add your first RSS";
+                return;
+            }
 
             foreach (Bookmarks item in mainVM.BookmarksList)
             {
@@ -67,6 +73,7 @@ namespace RSSAgregator
                 pivot.Items.Add(pivotItem);
             }
 
+            TextBlockMessage.Visibility = Visibility.Collapsed;
             GridMain.Children.Clear();
             GridMain.Children.Add(pivot);
         }
