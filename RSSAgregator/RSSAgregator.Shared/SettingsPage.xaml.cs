@@ -1,9 +1,11 @@
-﻿using RSSAgregator.ViewModel;
+﻿using RSSAgregator.Model;
+using RSSAgregator.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -86,6 +88,30 @@ namespace RSSAgregator
             await this.vm.List();
             ListViewBookmarks.ItemsSource = null;
             ListViewBookmarks.ItemsSource = this.vm.BookmarksList;
+        }
+
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void StackPanel_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+
+            flyoutBase.ShowAt(senderElement);
+        }
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuFlyoutItem = sender as MenuFlyoutItem;
+            if (menuFlyoutItem != null)
+            {
+                var b = menuFlyoutItem.DataContext as Bookmarks;
+                await this.vm.Remove(b);
+                this.UpdateListView();
+            }
         }
     }
 }

@@ -93,6 +93,11 @@ namespace RSSAgregator
             Frame.Navigate(typeof(SettingsPage));
         }
 
+        private void AppBarButtonAbout_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
+        }
+
         
     }
 }

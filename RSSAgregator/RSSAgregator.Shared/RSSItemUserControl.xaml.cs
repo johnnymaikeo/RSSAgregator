@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -24,9 +25,15 @@ namespace RSSAgregator
             this.InitializeComponent();
 
             TextBlockTitle.Text = Title;
-            TextBlockDescription.Text = Description;
+            TextBlockDescription.Text = Regex.Replace(Description, "<.*?>", string.Empty);
             TextBlockCategory.Text = Category;
-            TextBlockPubDate.Text = PubDate;
+            TextBlockPubDate.Text = this.FormatDateString(PubDate);
+        }
+
+        private string FormatDateString(string date)
+        {
+            var dateArray = date.Split(' ');
+            return string.Concat(dateArray[0], " ", dateArray[1], " ", dateArray[2], " ", dateArray[3]);
         }
     }
 }

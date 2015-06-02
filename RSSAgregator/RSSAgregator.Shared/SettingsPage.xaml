@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ScrollViewer>
             <StackPanel Margin="10">
@@ -14,12 +14,16 @@
                 <TextBlock Name="TextBlockOutputMessage"></TextBlock>
                 <TextBox PlaceholderText="URL" Name="TextBoxUrl"></TextBox>
                 <TextBox PlaceholderText="Name" Name="TextBoxName"></TextBox>
-                <Button Content="Save" HorizontalAlignment="Right" Name="ButtonSave" Click="ButtonSave_Click"></Button>
                 <ListView Name="ListViewBookmarks">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            <StackPanel Holding="StackPanel_Holding">
+                                <FlyoutBase.AttachedFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="Delete" Click="MenuFlyoutItem_Click"></MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </FlyoutBase.AttachedFlyout>
+                                <TextBlock Text="{Binding Name}" ></TextBlock>
                                 <TextBlock Text="{Binding Url}"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
@@ -28,4 +32,10 @@
             </StackPanel>
         </ScrollViewer>
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Back" x:Name="ButtonCancel" Click="ButtonCancel_Click"></AppBarButton>
+            <AppBarButton Icon="Save" x:Name="ButtonSave" Click="ButtonSave_Click"></AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

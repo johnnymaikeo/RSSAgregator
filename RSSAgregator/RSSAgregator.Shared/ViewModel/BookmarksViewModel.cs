@@ -35,6 +35,22 @@ namespace RSSAgregator.ViewModel
             }
         }
 
+        public async Task Remove(Bookmarks b)
+        {
+            var i = 0;
+            foreach (var item in BookmarksList)
+            {
+                if (item.Name == b.Name && item.Url == b.Url)
+                {
+                    break;
+                }
+                i++;
+            }
+
+            BookmarksList.RemoveAt(i);
+            await StoreLocalData();
+        }
+
         public async Task List()
         {
             await FetchLocalData();
@@ -42,7 +58,7 @@ namespace RSSAgregator.ViewModel
 
         #region LOCAL_DATA_STORAGE
 
-        private async void StoreLocalData()
+        private async Task StoreLocalData()
         {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             var file = await folder.GetFileAsync(LOCAL_DATA_FILENAME);
